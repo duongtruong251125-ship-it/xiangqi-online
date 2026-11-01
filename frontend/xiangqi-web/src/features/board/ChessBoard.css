@@ -1,0 +1,54 @@
+.board-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #e4cc97;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 0 2px 10px;
+}
+.board-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(212, 168, 83, 0.36);
+  border-radius: 8px;
+  background: rgba(32, 37, 46, 0.85);
+  color: #ecc777;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.board-toolbar button:hover {
+  background: rgba(212, 168, 83, 0.18);
+}
+.board-frame .board-surface {
+  aspect-ratio: 9 / 10;
+  border-radius: 10px;
+  background: radial-gradient(circle at 50% 45%, #fbf0ce 0%, #edd7a0 68%, #dec07f 100%);
+  color: #7a1c1c;
+  box-shadow: inset 0 0 24px rgba(122, 28, 28, 0.14);
+}
+.board-frame .river-label {
+  height: 10%;
+  background: transparent;
+  color: #7a1c1c;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.board-square-target.legal-target::after {
+  content: "";
+  position: absolute;
+  inset: 34%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #52dca8 0%, #248f68 100%);
+  box-shadow: 0 0 10px rgba(59, 155, 120, 0.85), 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+.piece.legal-capture {
+  outline: 3px dashed #248f68;
+  outline-offset: 2px;
+}

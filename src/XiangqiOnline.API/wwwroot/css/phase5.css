@@ -1,0 +1,191 @@
+/* ==========================================================================
+   PHASE 5: RESPONSIVE ARENA & ONLINE CLOCKS ("Kỳ Đài Hoàng Gia")
+   ========================================================================== */
+:root {
+  --game-ink: #f5efe6;
+  --game-muted: #a39d92;
+  --game-panel: #171a21;
+  --game-line: #2a2f3a;
+}
+
+.online-game-shell {
+  max-width: 1360px;
+  width: calc(100% - 28px);
+  margin: 16px auto 32px;
+  padding: clamp(14px, 2.2vw, 26px);
+  color: var(--game-ink);
+  background: linear-gradient(180deg, rgba(24, 28, 36, 0.96) 0%, rgba(15, 17, 21, 0.98) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--shadow-elevated);
+}
+
+.online-game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.online-game-header h1 {
+  margin: 2px 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+}
+.online-game-header p:not(.eyebrow),
+.turn-status {
+  color: var(--game-muted);
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.online-players {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.online-player {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-abyss);
+  border: 1px solid var(--game-line);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.online-player.active {
+  border-color: var(--gold-imperial);
+  background: linear-gradient(90deg, rgba(212, 168, 83, 0.14), rgba(15, 17, 21, 0.92));
+  box-shadow: 0 0 20px rgba(212, 168, 83, 0.18);
+}
+
+.player-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 900;
+}
+.red-mark {
+  color: #a61919;
+  background: radial-gradient(circle at 32% 28%, #fffdf5 0%, #f5e1b5 65%, #cfb074 100%);
+  border: 2px solid #d4b275;
+  box-shadow: 0 3px 0 #91703e;
+}
+.black-mark {
+  color: #16181b;
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #e6ebef 65%, #bfc8d1 100%);
+  border: 2px solid #cbd3dc;
+  box-shadow: 0 3px 0 #7b8691;
+}
+
+.player-clock {
+  min-width: 5.2rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+  font: 700 1.25rem var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--gold-bright);
+}
+
+.connection-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-gold);
+  border-radius: 999px;
+  background: rgba(212, 168, 83, 0.12);
+  color: var(--gold-bright);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.connection-indicator::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.connection-indicator.connected {
+  color: #7fe0ba;
+  border-color: rgba(59, 155, 120, 0.5);
+  background: rgba(59, 155, 120, 0.14);
+}
+.connection-indicator.disconnected {
+  color: #ff9e9e;
+  border-color: rgba(207, 60, 60, 0.5);
+  background: rgba(166, 43, 43, 0.2);
+}
+
+/* Responsive Board Scaling across all screen heights & widths */
+.online-game-shell .board-wrap,
+.game-card .board-wrap {
+  width: min(100%, 62vh, 560px);
+  margin: 0 auto;
+}
+
+.online-game-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 4px;
+  flex-wrap: wrap;
+}
+.reconnect-overlay {
+  padding: 12px 16px;
+  margin: 10px 0;
+  text-align: center;
+  color: #ffe4a7;
+  background: rgba(180, 120, 30, 0.22);
+  border: 1px solid var(--border-gold);
+  border-radius: 10px;
+  font-weight: 600;
+}
+.game-finished-line {
+  text-align: center;
+  font-weight: 700;
+  color: var(--gold-bright);
+  font-size: 16px;
+  margin: 12px 0;
+}
+.result-backdrop { z-index: 60; }
+.result-modal { text-align: center; }
+
+.online-game-shell .move-log {
+  max-height: 15rem;
+  overflow: auto;
+  padding: 14px 16px;
+  background: var(--bg-abyss);
+  border: 1px solid var(--game-line);
+  border-radius: 14px;
+}
+.online-game-shell .move-log h2 { margin-top: 0; font-size: 16px; }
+.online-game-shell .move-log li { padding: 4px 8px; color: var(--text-ivory); }
+
+@media (max-width: 720px) {
+  .online-game-shell {
+    width: calc(100% - 16px);
+    margin: 8px auto 24px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+  .online-players { grid-template-columns: 1fr; gap: 8px; }
+  .online-game-shell .board-wrap,
+  .game-card .board-wrap {
+    width: 100%;
+  }
+}

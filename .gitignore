@@ -1,0 +1,32 @@
+# .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+*.cache
+TestResults/
+coverage/
+.tools/
+
+# Node
+node_modules/
+frontend/xiangqi-web/dist/
+frontend/xiangqi-web/coverage/
+npm-debug.log*
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/appsettings.*.local.json
+secrets.json
+
+# Local agent working notes
+/DEV_STATE.md
+
+# Editors and OS
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · Xiangqi Online</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/phase4.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/phase5.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/phase6.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/phase7.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" asp-controller="Home" asp-action="Index">象 <span>Xiangqi Online</span></a>
+        <nav aria-label="Điều hướng chính">
+            <a asp-controller="Lobby" asp-action="Index">Sảnh chơi</a>
+            <a asp-controller="AiGame" asp-action="Index">Đấu với máy</a>
+            <a asp-controller="Profile" asp-action="Index" id="profile-link">Hồ sơ</a>
+            <a asp-controller="Account" asp-action="Login" id="login-link">Đăng nhập</a>
+            <span id="nav-user" hidden></span>
+        </nav>
+    </header>
+    @RenderBody()
+    <footer>© 2026 Xiangqi Online · Luật chơi được xử lý ở máy chủ.</footer>
+    <script src="~/lib/vue/vue.global.prod.js"></script>
+    <script src="~/lib/signalr/signalr.min.js"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
+</body>
+</html>

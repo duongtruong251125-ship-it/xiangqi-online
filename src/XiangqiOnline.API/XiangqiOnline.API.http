@@ -1,0 +1,6 @@
+@XiangqiOnline.API_HostAddress = http://localhost:5197
+
+GET {{XiangqiOnline.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

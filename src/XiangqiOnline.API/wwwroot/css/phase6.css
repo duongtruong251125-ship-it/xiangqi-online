@@ -1,0 +1,168 @@
+/* ==========================================================================
+   PHASE 6: REALTIME CHAT & 1-1 VIDEO INTERACTION SIDEBAR ("Kỳ Đài Hoàng Gia")
+   ========================================================================== */
+.game-interaction-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.75fr);
+  gap: 20px;
+  align-items: start;
+}
+.game-board-area {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game-board-area .board-wrap {
+  width: min(100%, 62vh, 560px);
+  margin: 0 auto;
+}
+
+.game-interactions {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.chat-panel,
+.call-panel {
+  padding: 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: var(--bg-abyss);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.chat-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.chat-panel h2,
+.call-panel h2 {
+  margin: 2px 0 8px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--text-ivory);
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 11rem;
+  max-height: 19rem;
+  overflow-y: auto;
+  padding: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: #0b0d10;
+}
+.chat-message {
+  align-self: flex-start;
+  max-width: 88%;
+  padding: 8px 12px;
+  border-radius: 12px 12px 12px 3px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  overflow-wrap: anywhere;
+}
+.chat-message.mine {
+  align-self: flex-end;
+  border-radius: 12px 12px 3px 12px;
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.24), rgba(160, 114, 38, 0.22));
+  border-color: var(--border-gold);
+}
+.chat-message strong,
+.chat-message time {
+  display: block;
+  font-size: 11px;
+  color: var(--gold-bright);
+}
+.chat-message p {
+  margin: 4px 0;
+  white-space: pre-wrap;
+  font-size: 13px;
+  color: var(--text-ivory);
+}
+.chat-message time {
+  text-align: right;
+  color: var(--text-muted);
+}
+.chat-empty {
+  margin: auto;
+  color: var(--text-sand);
+  text-align: center;
+  font-size: 13px;
+}
+
+.chat-compose {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 10px;
+}
+.chat-compose input {
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: var(--text-ivory);
+  background: #0b0d10;
+  font-size: 13px;
+}
+.chat-compose input:focus {
+  border-color: var(--gold-imperial);
+  outline: none;
+}
+.small-button {
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.call-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.call-videos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+.call-videos video {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  border: 1px solid var(--border-gold);
+  background: #08090b;
+  object-fit: cover;
+}
+.call-videos video:last-child {
+  transform: scaleX(-1);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 980px) {
+  .game-interaction-grid { grid-template-columns: 1fr; }
+  .game-interactions { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  .game-interactions { grid-template-columns: 1fr; }
+  .chat-list { max-height: 15rem; }
+}
