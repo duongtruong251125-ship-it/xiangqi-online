@@ -8,6 +8,7 @@
 TestResults/
 coverage/
 .tools/
+/artifacts/
 
 # Node
 node_modules/

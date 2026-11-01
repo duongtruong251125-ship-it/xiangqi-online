@@ -103,6 +103,7 @@ Integration test health dùng SQL Server thật cho trường hợp thành công
 - [Database và migration](docs/database.md)
 - [REST API contracts](docs/api-contract.md)
 - [Xác thực và quản lý phiên](docs/authentication.md)
+- [Deploy public bằng Cloudflare Quick Tunnel trên Windows](docs/deployment/cloudflare-tunnel-windows.md)
 - [Bảo mật](docs/security.md)
 - [SignalR contracts](docs/signalr-contract.md)
 - [Luật và FEN](docs/xiangqi-rules.md)

@@ -83,7 +83,8 @@ public sealed class AuthController(IAuthenticationService authentication, IConfi
     {
         var origin = Request.Headers.Origin.ToString().TrimEnd('/');
         var allowed = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
-        if (origin.Length == 0 || !allowed.Contains(origin, StringComparer.OrdinalIgnoreCase))
+        var sameOrigin = string.Equals(origin, $"{Request.Scheme}://{Request.Host}", StringComparison.OrdinalIgnoreCase);
+        if (origin.Length == 0 || (!sameOrigin && !allowed.Contains(origin, StringComparer.OrdinalIgnoreCase)))
             throw new AuthException("CSRF_ORIGIN_INVALID", "Nguồn yêu cầu không được phép.", 403);
     }
 }

@@ -161,6 +161,51 @@ public sealed class AuthenticationEndpointTests(AuthIntegrationFixture fixture)
     }
 
     [Fact]
+    public async Task RefreshAcceptsSameOriginQuickTunnelOverForwardedHttps()
+    {
+        using var client = CreateClient();
+        var username = $"Tunnel_{Guid.NewGuid():N}"[..18];
+        await Register(client, username, $"{Guid.NewGuid():N}@example.com");
+        var login = await Login(client, username);
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/auth/refresh")
+        {
+            Content = JsonContent.Create(new { })
+        };
+        request.Headers.Host = "test-quick-tunnel.trycloudflare.com";
+        request.Headers.TryAddWithoutValidation("Origin", "https://test-quick-tunnel.trycloudflare.com");
+        request.Headers.TryAddWithoutValidation("X-Forwarded-Proto", "https");
+        request.Headers.TryAddWithoutValidation("Cookie", login.Cookie);
+
+        using var refresh = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.OK, refresh.StatusCode);
+        Assert.Contains("Set-Cookie", refresh.Headers.ToString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task RefreshRejectsCrossOriginFromQuickTunnelHost()
+    {
+        using var client = CreateClient();
+        var username = $"Tunnel_{Guid.NewGuid():N}"[..18];
+        await Register(client, username, $"{Guid.NewGuid():N}@example.com");
+        var login = await Login(client, username);
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/auth/refresh")
+        {
+            Content = JsonContent.Create(new { })
+        };
+        request.Headers.Host = "test-quick-tunnel.trycloudflare.com";
+        request.Headers.TryAddWithoutValidation("Origin", "https://attacker.example");
+        request.Headers.TryAddWithoutValidation("X-Forwarded-Proto", "https");
+        request.Headers.TryAddWithoutValidation("Cookie", login.Cookie);
+
+        using var response = await client.SendAsync(request);
+        var body = await response.Content.ReadAsStringAsync();
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        Assert.Contains("CSRF_ORIGIN_INVALID", body, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task ConcurrentRefreshDoesNotRevokeWinningReplacement()
     {
         using var client = CreateClient();
