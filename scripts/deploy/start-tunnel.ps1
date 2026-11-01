@@ -8,8 +8,15 @@ $localUrl = Get-XiangqiLocalUrl $Port
 $statePath = Get-XiangqiStatePath 'tunnel'
 $existingState = Read-XiangqiProcessState 'tunnel'
 if ($owned = Get-XiangqiOwnedProcess $existingState) {
-    Write-Host "Tunnel đang chạy: $($existingState.PublicUrl) (PID $($owned.Id))."
-    exit 0
+    $localReady = Test-XiangqiHealthy $localUrl
+    $publicReady = $existingState.LocalUrl -eq $localUrl -and $existingState.PublicUrl -and (Test-XiangqiHealthy ([string]$existingState.PublicUrl))
+    if ($localReady -and $publicReady) {
+        Write-Host "Tunnel đang chạy và public health OK: $($existingState.PublicUrl) (PID $($owned.Id))."
+        exit 0
+    }
+    if (-not $localReady) { throw "Ứng dụng local chưa healthy tại $localUrl. Hãy khởi động ứng dụng trước; tunnel hiện tại vẫn được giữ nguyên." }
+    Write-Warning "Tunnel cũ còn tiến trình nhưng public URL không healthy hoặc trỏ sai cổng; đang khởi tạo lại Quick Tunnel."
+    Stop-XiangqiOwnedProcess 'tunnel'
 }
 if (-not (Test-XiangqiHealthy $localUrl)) { throw "Ứng dụng local chưa healthy tại $localUrl. Chạy start-local.ps1 trước." }
 try {
